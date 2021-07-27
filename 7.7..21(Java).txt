@@ -1,0 +1,336 @@
+
+OOPs
+	Object - real world entity with properties and atributes
+	Class - collection of objects which share common props and attributes
+	Message - way of communication between class and objects
+	Methods - a funtion which performs a task
+
+Use of OOPs (3R's)
+	R - Real world programming: real life objects converted into code
+	R - Reusability: can be reused across diff platforms
+	R - Resilience to change: modifiable
+
+4 pillars of OOPs
+	-Abstraction: shows the essentials
+	-Encapsulation: hiding unessential details
+	-Inheritance: taking help of existing objects
+	-Polymorsphism: different functionality during different scenario
+
+Father of Java: James Gosling
+
+SDK: software development kit
+
+JRE: byte code to native code
+
+Componenets that make java program run:
+	- Java APIs : System.out.println("");
+	- Java class file
+	- JVM
+
+Setting up the path:
+	1. Add environment variable named JAVA_HOME with path C:\Program Files\Java\jdk-11.0.11
+	2. edit path variable: %JAVA_HOME%\bin
+
+Executing on cmd: 	
+	change directory to file location and then, run "javac filename.java"(compiles and forms .class file),
+	then run "java filename"
+	NOTE-make sure filename is the same as class name(which has the main function)
+
+Packages:(Syntax- package <packagename>;)
+---------
+Syntax to create- package <packagename>;
+	  import- import <packagename> <classname>;	//access specifc class of a package
+		  import <packagename> * ;		//access all classes of a package
+consists of classes, helps in keeping the classes organised, and restricting acces to multiple classes
+eg) when we have classes 
+com.views			//package name 'com.views'
+	ShowMenu		//'ShowMenu' class under 'com.views' package
+	AddEmployeeScreen
+com.controller			//package named 'com.controller'
+	empIncrement
+	empBenefits
+
+ECLIPSE:
+--------
+
+	Setup:
+	window->show view->project explorer
+	window->perspective->open perspective->others->java
+	file->new->java project
+	right click on src->new->package
+	right click on package->new->class
+
+	Coding:
+	'sysout'->ctrl+space=Stem.out.println()
+	right click on empty space->run as->java application
+
+CASTING: conversion of primitive data types
+--------
+	-implicit (lower to higher data type)
+	-explicit (higher to lower data type)
+
+eg)
+public class Demo 
+{
+	public static void main(String[] args)
+	{
+		int x=100;
+		long y=x; 		//implicit casting
+		
+		//x=y wrong 
+		x=(int)y; 		//explicit casting
+		
+		char ch='A';
+		int k=ch; 		//implicit
+		char ch2=(char)k; 	//explicit
+		
+		System.out.println(ch2);	//A
+		System.out.println(k);		//65
+		System.out.println(y);		//100
+		
+	}
+
+}
+
+ACCESS MODIFIERS (controls the access of methods)
+----------------
+PUBLIC: accesible to anyone, inside and outside the class, package
+
+PRIVATE: only inside the class
+
+DEFAULT: accessible by classes of same package
+
+PROTECTED: classes of the same package and, the class extending from the parent class
+	   (even if the extented class belongs to another package..."import" used in the process)
+
+
+PARAMETERS
+----------
+Formal: one that is defined within parameters while defining the method
+Actual: one that is passed onto the method while calling it from main method
+
+ENCAPSULATION (GETTERS AND SETTERS)
+-----------------------------------
+Accessor(aka getters): retrieves hidden data
+Mutator(aka setters): changes hidden data
+
+create getters and setters: rightclick->source->generate getters and setters->select the variables
+
+OVERLOADING
+------------
+- Same function names but different signature of functions
+
+eg)
+public class overloading 
+{
+	int max(int x,int y)
+	{
+		if(x>y)
+			return x;
+		else
+			return y;
+	}
+	double max(double x,double y)
+	{
+		if(x>y)
+			return x;
+		else
+			return y;
+	}
+	
+	public static void main(String args[])
+	{
+		overloading ov=new overloading();
+		System.out.println(ov.max(10,5.2));	//10.0 (double max gets called)	
+	}
+	
+}
+
+STATIC
+------
+
+Static variable- belongs to the class and not any method, changes made at any point are updated
+Static methods- only access static variables
+Normal methods- can access static and instance variables
+
+NOTE: static members can be accessed with class name, without the need of creating an object
+
+eg)
+public class Staticdemo
+{
+        static int x=100;	//without static the ouput will be 100,100,100
+        int y;				//instance variable
+        void display()
+        {
+            System.out.println(x);
+            x++;
+        }
+        static void Disp()
+        {
+            int d=100;
+            x=900;
+            //y=200;		//y can't be accessed by static method
+        }
+       
+        public static void main(String[] args)
+        {
+            	Staticdemo s1=new Staticdemo();
+            	Staticdemo s2=new Staticdemo();
+            	Staticdemo s3=new Staticdemo();
+           
+            	s1.display();	//100
+            	s2.display();	//101
+            	s3.display();	//102
+           
+            	Staticdemo.Disp();	//900 //static method accessed with the help of class name
+            	System.out.println(Staticdemo.x);	//static variable accessed with the help of class name
+           
+        }
+}
+
+CONSTRUCTOR
+-----------
+-Special method used for creating an obj of class
+-constructor has same name as class
+-NO return type, NO mentioning of void too
+
+DEFAULT COSNSTRUCTOR: has no parameters
+PARAMETERIZED CONSTRUCTORS: has parameters
+
+eg)
+public class Sampleconstructors 
+{
+	int x,y,z;
+	public Sampleconstructors()			//default constructor
+	{
+		x=10;
+		y=10;
+	}
+	public Sampleconstructors(int x1,int y1)	//parameterized
+	{
+		x=x1;
+		y=y1;
+	}
+	void add()
+	{
+		z=x+y;
+	}
+	void disp()
+	{
+		System.out.println("Result: "+z);
+	}
+	public static void main(String[] args)
+	{
+		Sampleconstructors sc= new Sampleconstructors();
+		sc.add(); 
+		sc.disp();	//20
+		Sampleconstructors sc2= new Sampleconstructors(20,20);
+		sc2.add();
+		sc2.disp();	//40
+	}
+
+}
+
+'this' KEYWORD: used to avoid confusion when there are 2 variables of same name
+---------------
+-this helps in referrring to the instance varialbe
+Example wrt prev program:
+public class Sampleconstructors 
+{
+	int x,y,z;
+	public Sampleconstructors()			//default constructor
+	{
+		x=10;
+		y=10;
+	}
+	public Sampleconstructors(int x,int y)	//parameterized
+	{
+		this.x=x;	//instance variable x=local variable x
+		this.y=y;
+	}
+	void add()
+	{
+		z=x+y;
+	}
+	void disp()
+	{
+		System.out.println("Result: "+z);
+	}
+	public static void main(String[] args)
+	{
+		Sampleconstructors sc= new Sampleconstructors();
+		sc.add(); 
+		sc.disp();	//20
+		Sampleconstructors sc2= new Sampleconstructors(20,20);
+		sc2.add();
+		sc2.disp();	//40
+	}
+
+}
+
+CONSTRUCTOR CHAINING USING this()
+---------------------------------
+
+public class Chainconstr
+{
+   
+    public Chainconstr() 
+    {
+        this(10);
+        System.out.println("Default");
+    }
+    public Chainconstr(int x,int y) 
+    {
+        System.out.println("Params 2 - "+x+ "  "+y);
+    }
+    public Chainconstr(int x) 
+    {
+        this(10,20);
+        System.out.println("Param 1 " +x);
+    }
+   
+    public static void main(String[] args) 
+    {
+    	Chainconstr cc=new Chainconstr();
+    }
+}
+Output of the code above:(notice the order)
+Params 2 - 10  20
+Param 1 10
+Default
+NOTE: the ouput will change if u pass an argument while declaring the constructor inside main
+
+ARRAY AND LOOPS
+---------------
+
+public class ArrayDemo 
+{
+	public static void main() 
+	{
+		int a[]= {1,3,3,4};
+		a[1]=2;
+		
+		int b[]=new int[5];
+		b[0]=100;
+		b[1]=200;
+		
+		int c[];
+		c= new int[5];
+		
+		for(int i=0;i<5;i++) 
+		{
+			c[i]=i+1;
+		}
+		for(int i=0;i<c.length;i++)		//.length returns length of array
+		{
+			System.out.println(c[i]);
+		}
+		for(int x:c)				//x attains value in c one by one
+		{
+			System.out.println(x);
+		}
+	}
+
+}
+
+

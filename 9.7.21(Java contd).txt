@@ -1,0 +1,566 @@
+ACCEPTING VALUES
+----------------
+-import java.util.Scanner; //scanner part of util package
+-create object of scanner and use it to aceept values
+
+eg)
+import java.util.Scanner;
+
+public class Acceptvalues 
+{
+	int empno;
+	String name;
+	double salary;
+	
+	void accept() 
+	{
+		Scanner sc=new Scanner(System.in);
+		empno=sc.nextInt();	//syntax:sc."next"and the datatype
+		name=sc.next();		// by default  datatype  is string
+		salary=sc.nextDouble();
+		sc.close();		//close the scanner after the use
+	}
+	
+	void display()
+	{
+		System.out.println("Data are: ");
+		System.out.println(empno+" "+name+" "+salary);
+	}
+	
+	public static void main(String[] args)
+	{
+		System.out.println("Enter empno,name,salary:");
+		Acceptvalues d=new Acceptvalues();
+		d.accept();
+		d.display();	
+	}
+
+}
+
+WRAPPERS
+---------
+-Add meaning to the primitive data types(as there are methods available under wrappers)
+-used when data is required as a object, hence converts primitive data type to objects
+-eg) 	wrapper class of boolean is "Boolean"
+	 ''        ''    int is "Integer"
+	 ''        ''    char is "Character"
+
+-examples of defining wrappers:
+	Boolean boolean=new Boolean("false");
+	Integer int-new Integer("16");	//NOTE: values always enclosed in "_"
+
+-boxing:primitivedata type to object
+ unboxing:object to primitive data type
+
+-example of unboxing:
+
+- string to int and vice versa:
+	-string to int: parseInt(x)
+	-int to string: toString(x)
+
+eg)
+public static void main(String[] args)
+{
+	int num=100;
+	Integer n=new Integer(num);		//wrapping or boxing
+	System.out.println(n.doubleValue());	// get the "double" value
+	int x=n.intValue();			//unwrapping or unboxing
+		 
+	char ch='A';
+	Character c=new Character(ch);
+   	char t=c.charValue();
+	     
+	String number="100";
+	int no = Integer.parseInt(number); 	//String to Integer, parseInt returns primitive data type
+	System.out.println(no);
+	     
+	int x1=100;
+	String a=Integer.toString(x1); 		//int to String	way 1
+	String b=String.valueOf(x1); 		//		way 2
+	String c=""+x1;				//		way 3	
+	System.out.println(a+" "+b);
+}
+
+Q) char c=7, res=0. Print res and the output should be 7.
+
+public static void main(String[] args)
+	{
+		 char c='7';
+		 int res=0;
+		 Character ch= new Character(c);
+		 res=ch.getNumericValue(c);
+		 System.out.println(res);
+		 /*String x= String.valueOf(c);		//just another approach
+		 res=Integer.parseInt(x);
+		 System.out.println(res);*/
+	}
+
+PRACTICE QUESTIONS
+-------------------
+
+BRANCHING STATEMENTS(if-else,case)
+-------------------
+
+Q1) WAP to accept a year and check for leap year based on the following test cases
+	
+	Test case
+	----------
+	input			output
+
+	2000			leap year
+	2001			not a leap year
+	2100			century year
+	1900			century year
+	2400			leap year
+	1999			not a leap year
+	2004			leap year
+
+	logic: a leap year is divisible by 100 and 400
+
+public static void main(String[] args)
+	{
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter year");
+		int y=sc.nextInt();
+		sc.close();
+		if(y%400==0) 
+		{
+			System.out.println("Leap year");
+		}
+		else
+		{
+			if(y%100==0)
+				System.out.println("Century year");
+			else
+				System.out.println("not a leap year");
+		}
+		
+	}
+
+Q2) accept 2 integers and an arithmetic operation(+,-,*,/)
+
+	numbers: 10 20
+	operator: +
+
+	input		output
+	10 20 +		30
+	10 5 -		5
+	10 2 $		invalid operator
+
+public static void main(String[] args)
+{
+	Scanner sc=new Scanner(System.in);
+	System.out.println("Enter first number");
+	int a=sc.nextInt();
+	System.out.println("Enter second number");
+	int b=sc.nextInt();
+	System.out.println("Enter +,-,* or /");
+	char ch=sc.next().charAt(0);	//to accept one character
+	sc.close();
+	int res;
+	switch(ch)
+	{
+	case '+':	res=a+b;
+			System.out.println(res);
+			break;
+	case '-':	res=a-b;
+			System.out.println(res);
+			break;
+	case '*':	res=a*b;
+			System.out.println(res);
+			break;
+	case '/':	res=a/b;
+			System.out.println(res);
+			break;
+	default: System.out.println("Wrong operator!");
+	}
+}
+
+
+Q3) WAP to print next 5 values in the following pattern:
+	string pat="A001";
+	output:
+	A002	A003	A004	A005	A006
+
+public static void main(String[] args)
+{
+	String pat="A001";
+	int len=pat.length();
+	String s=pat.substring(0,len-1);
+	char ch=pat.charAt(len-1);
+	int x=Character.getNumericValue(ch);
+	for(int i=1;i<6;i++)
+	{
+		x=x+1;
+		System.out.println(s+x);
+	}
+}
+
+Q4) WAP to accept a string and find the sum of digits in it (hint: use charAt to extract characters seperately)
+	input		output
+	ABC123		6
+	A1B2C3		6
+	vamo		0
+	feg111		3
+	(Characte.isDigit() if character of string is a digit)
+
+public static void main(String[] args)
+{
+	Scanner sc=new Scanner(System.in);
+	System.out.println("Enter a string:");
+	String inp=sc.next();
+	sc.close();
+	
+	int len=inp.length();
+	int sum=0;
+	char ch;
+	
+	for (int i=0;i<len;i++)
+	{
+		ch=inp.charAt(i);
+		if(Character.isDigit(ch))
+			sum=sum+Character.getNumericValue(ch);
+	}
+	System.out.println("Sum of digits: "+sum);
+	
+}
+
+Q5) accept a number and check if its an increasing number
+
+	input		output
+	1234		yes
+	1223		yes
+	1221		no
+	4321		no
+	123		yes
+
+->approach-1(string):
+public static void main(String[] args)
+{
+	Scanner sc=new Scanner(System.in);
+	System.out.println("Enter a number:");
+	int inp=sc.nextInt();
+	sc.close();
+	String s=Integer.toString(inp);
+	int len=s.length();
+	boolean flag=false;
+	
+	for(int i=0;i<len-1;i++)
+	{
+		if(Character.getNumericValue(s.charAt(i))<=Character.getNumericValue(s.charAt(i+1)))
+			flag=true;
+	}
+	
+	if(flag)
+		System.out.println("Increasing number");
+	else
+		System.out.println("Not an increasing number");
+}
+
+->approach-2(direct number manipulation):
+package com.lti;
+import java.util.*;
+public class IncreasingNo 
+{​​
+	public static void main(String args[]) 
+	{​​
+		int num;
+		boolean val = false;
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter a number");
+		num = sc.nextInt();
+		int currentDig = num % 10;
+		num = num/10;
+		while(num>0)
+		{​​
+			if(currentDig <num % 10)
+			{​​
+				val = true;
+				break;
+			}​​
+			currentDig= num % 10;
+			num = num/10;
+		}​​
+		if(val)
+		System.out.println("not an increasing no.");
+		else
+		System.out.println("increasing no.");
+	}​​
+}​​
+
+->approach 3(simple)
+
+int flag = 0;
+int n = 1223;
+while(n!=0) 
+{
+    int num1 = n%10;
+    int num2 = (n/10)%10;
+    if(num1-num2<0)
+    {
+       System.out.println(false);
+       flag=1;
+                }
+       n=n/10;
+    }
+if(flag==0)
+System.out.println(true);
+
+
+INHERITANCE (way of implementing reusability)
+-----------
+-CHILD class automatically inhering variables and methods of PARENT class(aka Super class)
+eg) 	superclass: bicycle
+	subclass: mountain bike, road bike
+
+	supperclass: basic calculator
+	subclass: scientific calculator
+-"extends" used to create subclass
+-subclass inherits all public and protected variables(AND even default if they are in the same package)
+-subclass CANNOT access private members
+-Object class is the mother of all classes, there no parent of an object class
+-any class in java is the subclass of the Object class
+- eg of object classes:	equals()
+			toString()
+
+eg)
+class Bank
+{
+	String bankCode;
+	String bankName;
+	
+	void deposit()
+	{
+		System.out.println("Deposit Money");
+	}
+	void withdraw()
+	{
+		System.out.println("Withdraw Money");
+	}
+}
+
+class ICICI extends Bank		//ICICI inherits variables and methods of class "Bank"
+{
+	void setDetails()
+	{
+		bankCode="B001";	//no errors as this variable has been inherited
+		bankName="ICICI";
+	}
+	
+	void deposit()			//overriden method of "deposit" from parent class 
+	{
+		super.deposit();	//super keyword used to call deposit() from parent class
+		System.out.println("Deposit Money in ICICI bank");
+	}
+	
+	void display()
+	{
+		System.out.println("ID: "+bankCode+" Name: "+bankName);
+	}
+}
+
+
+public class BankProgram 
+{
+	public static void main(String[] args)
+	{
+		ICICI ic1=new ICICI();
+		ic1.setDetails();
+		ic1.deposit();		//method from child class ICICI is called and not from class Bank
+		ic1.withdraw();
+		ic1.display();
+	}
+
+}
+
+output of the program above:	Deposit Money
+				Deposit Money in ICICI bank
+				Withdraw Money
+				ID: B001 Name: ICICI
+
+SUPER CONSTRUCTOR
+-----------------
+-first line inside the constructor
+-parameterised and normal
+
+eg)
+class A
+{
+     public A(int x)
+     {
+         System.out.println("A"+x);
+     }
+}
+class B extends A
+{
+    B(int x)
+    {
+        super(20);	//calls immediate parent class, i.e, A
+        System.out.println("B"+x);
+    }
+}
+class C extends B
+{
+    C()
+    {
+    super(10);		//calls immediate parent class, i.e, B
+    System.out.println("C");   
+    }
+}
+public class ConsDemo 
+{
+	public static void main(String[] args) 
+	{
+        C c=new C();
+	}
+}
+//NOTE 1: path of constructors is always from parent class to sub classes
+//NOTE 2: so u need to set proper constructors along the subclasses
+
+output of the program above:	A20
+				B10
+				C
+
+
+ABSTRACT CLASS:
+---------------
+-inheritance is mosty used with the abstraction process in real time scenarios
+-a class that contains at least one abstract method
+-an bastract class can consist a concrete methods as well
+-to define an abstract method, the class must be abstract
+-abstract method must be executed by the classes inherited from the abstract class(Logic)
+-YOU CANNOT instantiate an abstract class
+-to access a method of an abstract class, make an object of the subclass and then access it through it
+
+eg)
+abstract class PassportHO
+{
+	abstract void verifyProof();
+	
+	void finalApproval() //Concrete Method
+	{
+		System.out.println("Passport issued");
+	}
+}
+
+class ChennaiPO extends PassportHO			//subclass of an ABSTRACT class
+{
+	void verifyProof() 				//without implementing this method, compiler with throw an error
+	{
+		System.out.println("Verified with DL");
+	}
+}
+
+class BangalorePO extends PassportHO			//subclass of an ABSTRACT class
+{
+	void verifyProof()				//without implementing this method, compiler with throw an error
+	{
+		System.out.println("Verified with Ration Card");
+	}
+}
+
+public class AbsDemo 
+{
+	public static void main(String[] args)
+	{
+		PassportHO chn=new ChennaiPO(); 	//PassportHO chn=new PassportHO() is wrong as u can't instantiate an abstract class
+		chn.verifyProof();
+		chn.finalApproval();
+		PassportHO bng=new BangalorePO();
+		bng.verifyProof();
+		bng.finalApproval();
+	}
+}
+
+INTERFACE
+---------
+-when all methods in the class are abstract, then the class is said to be an interface
+-to create an interface, use the keyword "interface" instead of "class"
+-the methods present in an interface are by default of abstract type, so no need to type "abstract" before the method name
+-an interface can't have a concrete method
+-to create subclasses we must use "implement" instead of "extends"
+-the variables defined inside an interface cannot be modified, they are of the type "public static final", they can be used though
+-a subclass can extend only one parent class but multiple interfaces
+
+eg)
+interface PassHO
+{
+    int officeno=100;
+    void verifyIdentity();
+    void finalApproval();
+}
+class PayPal
+{
+    void payment() {
+        System.out.println("Payment Method");
+    }
+}
+class CHNOffice extends PayPal implements PassHO	//subclass of the class PayPal and interface PassHO
+{
+ 
+    @Override
+    public void verifyIdentity() {
+        // TODO Auto-generated method stub
+        System.out.println(officeno);
+    //    officeno =200;
+    }
+ 
+    @Override
+    public void finalApproval() {
+        // TODO Auto-generated method stub
+
+    }
+ 
+    @Override
+    public void payment() {
+        // TODO Auto-generated method stub
+
+    }
+
+}
+class BGRLOffice implements PassHO
+{
+ 
+    @Override
+    public void verifyIdentity() {
+        // TODO Auto-generated method stub
+
+    }
+ 
+    @Override
+    public void finalApproval() {
+        // TODO Auto-generated method stub
+
+    }
+
+}
+public class InterfaceDemo 
+{
+//this code does nothing, here just for understanding concept and syntax 
+} 
+
+<missed case study-2 explantions cus of CR meeting>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

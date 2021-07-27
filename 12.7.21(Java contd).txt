@@ -1,0 +1,610 @@
+EXCEPTION HANDLING
+-------------------
+-exception causes normal flow to be disrupted
+-example: divide by zero(arithmetic error),out of memory error,open a file that's been deleted
+-order of blocks: try,catch,finally
+
+public class ExceptionDemo 
+{
+	public static void main(String[] args) 
+	{
+		int arr[]= {10,5,0,2};
+		int res=0;
+		res=arr[0]/arr[2];		//arr[2]=0
+		System.out.println("result: "+res);
+	
+	}	
+
+}
+//Exception in thread "main" java.lang.ArithmeticException: / by zero
+	at com.lti.ExceptionDemo.main(ExceptionDemo.java:9)
+
+eg) exception handling using try catch,finally
+
+public class ExceptionDemo 
+{
+	public static void main(String[] args) 
+	{
+		int arr[]= {10,5,0,2};
+		int res=0;
+		try {
+		res=arr[5]/arr[2];				//arr[5] out of bound, arr[2]=0
+		}
+		catch(ArithmeticException ex)			//arithmetic exception object "ex"
+		{
+			System.out.println("Error in Divsion :"+ex.getMessage());
+		}
+		catch(ArrayIndexOutOfBoundsException e)		//index out of bounds exception object "e"
+		{
+			System.out.println("Invalid array access :"+e.getMessage());
+		}
+		finally
+		{
+			System.out.println("result: "+res);
+		}
+	
+	}	
+
+}
+//NOTE: -the first exception encountered is thrown and compiler doesn't come back checking for another
+	-multiple catch blocks can be associarted with one try block
+
+eg2) using parent exception handling class "Exception", which consists of 
+     child classes like "ArithmeticException","IndexOutOfBoundsException",etc
+public class ExceptionDemo 
+{
+	public static void main(String[] args) 
+	{
+		int arr[]= {10,5,0,2};
+		int res=0;
+		try {
+		res=arr[0]/arr[2];				//arr[2]=0
+		}
+		catch(Exception e)				//parent exception handling class Exception, handles all exceptions
+		{
+			System.out.println("Error :"+e.getMessage());
+		}
+		finally
+		{
+			System.out.println("result: "+res);
+		}
+	
+	}	
+
+}
+//NOTE: better to use object of specific exception handling class, in order to reduce the load
+
+eg3) manually throwing exceptions
+
+public class ExceptionDemo 
+{
+	int res=0;
+	int calculate() throws ArithmeticException
+	{
+		int x=100;
+		int y=0;
+		if(y<1)
+			throw new ArithmeticException();	//manually throwing exception
+		return x/y;
+	}
+	
+	public static void main(String[] args) 
+	{
+		System.out.println(new ExceptionDemo().calculate());
+	}	
+
+}
+
+USER DEFINED EXCEPTIONS (!!!important, used during projects!!!)
+-----------------------
+
+class InvalidAgeException extends Exception			//custom exception handler sub class
+{
+    public InvalidAgeException(String message)
+    {
+        super(message);						//message passed to the base class, this acts as the exception message
+    }
+}
+
+class VerifyAge
+{
+        void verify(int age) throws InvalidAgeException		//adding 'throws' as we will manually throw exception in the method
+        {
+            if(age<18)
+                throw new InvalidAgeException("Invalid Age");	//manually throwing the custom exception
+            System.out.println("Age Verified");
+        }
+}
+public class ExceptionDemo
+{   
+	public static void main(String[] args)
+	{
+		VerifyAge va=new VerifyAge();   
+        try 
+        {
+        	va.verify(11);
+        }
+        catch (InvalidAgeException e)
+        {
+        	System.out.println(e.getMessage());
+        }
+    }
+}
+
+
+Q) use user defined exception handlers
+	input(sal)	output
+	-100		sal cant be -ve
+	60000		sal cant be >50k
+	45000		sal verified
+import java.util.Scanner;
+class SalaryNegativeException extends Exception
+{
+	public SalaryNegativeException(String mssg)
+	{
+		super(mssg);
+	}
+}
+
+class SalaryRangeBreakException extends Exception
+{
+	public SalaryRangeBreakException(String mssg)
+	{
+		super(mssg);
+	}
+}
+
+class VerifySal
+{
+        void verify(int sal) throws SalaryNegativeException,SalaryRangeBreakException		//mentioning all the possible exception that can be thrown from this method
+        {
+            if(sal<0)
+                throw new SalaryNegativeException("Salary can't be negative");
+            else if (sal>50000)
+            	throw new SalaryRangeBreakException("Salary can't be more than 50000");
+            else
+            	System.out.println("Salary Verified");
+        }
+}
+
+public class CustomExceptions 
+{
+	public static void main(String[] args) 
+	{
+		Scanner sc=new Scanner(System.in);
+		VerifySal va=new VerifySal();
+		System.out.println("Enter salary");
+		int sal=sc.nextInt();
+		sc.close();
+		try
+		{
+			va.verify(sal);
+		}
+		catch(SalaryNegativeException e)
+		{
+			System.out.println(e.getMessage());
+		}
+		catch(SalaryRangeBreakException e)
+		{
+			System.out.println(e.getMessage());
+		}
+	}	
+
+}
+
+
+STRING FUNCTIONS
+----------------
+
+public class StringDemo 
+{
+	public static void main(String[] args) 
+	{
+		String s1="Hello World";
+		System.out.println(s1);
+		
+		String s2="Ant";
+		String s3="ant";
+		
+		System.out.println(s2.compareTo(s3));
+		System.out.println(s2.compareToIgnoreCase(s3));
+		
+		System.out.println(s1.indexOf('o'));		//first occurrence
+		System.out.println(s1.lastIndexOf('o'));	//last occurrence
+		
+		System.out.println(s1.length());
+		
+		System.out.println(s2.concat("Man"));
+		
+		System.out.println(s1.replace('o', 'a'));
+		
+		System.out.println(s1.substring(4)); 		//no end index mentioned, so printed till last
+		System.out.println(s1.substring(0, 5));
+		
+		System.out.println(s1.trim());			//removes spaces at the start and end
+		
+		//NOTE: strings are immutable
+	}
+
+}
+
+Q) Accept a string and change the consonants to next character. If the char is z/Z, change to a/A.
+	input		output
+	-----		------
+	OPPO		OQQO
+	Java		Kawa
+	Apple		Aqqme
+	zombie		aoncie
+import java.util.Scanner;
+public class Practice 
+{
+	String changestr(String input)
+	{
+		String str="";
+		int len=input.length();
+		for (int i=0;i<len;i++)
+		{
+			char ch=input.charAt(i);
+			if(ch!='a'&&ch!='e'&&ch!='i'&&ch!='o'&&ch!='u'&&ch!='A'&&ch!='E'&&ch!='I'&&ch!='O'&&ch!='U')
+			{
+				ch=(char)(ch+1);
+			}
+			if(ch=='z')
+				ch='a';
+			if(ch=='Z')
+				ch='A';
+			str=str+ch;
+		}
+		
+		return str;
+	}
+		
+	
+	public static void main(String[] args) 
+	{
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter String");
+		String inp=sc.next();
+		sc.close();
+		
+		System.out.println("Updated string: "+new Practice().changestr(inp));
+	}
+
+}
+
+
+Q) Accept alphanumeric string, and display alphabet first and the the numbers	
+	input		output
+	----- 		------
+	123abc		abc123
+	5ja2va3		java523
+	c990ab		cab990
+
+import java.util.Scanner;
+public class Practice 
+{
+	String alphanumeric(String input)
+	{
+		String res="";
+		String alpha="";
+		String num="";
+		for (char ch: input.toCharArray())	//for-each loop
+		{
+			if((ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z'))
+				alpha=alpha+ch;
+			else
+				num=num+ch;
+		}
+		res=alpha+num;
+		return res;
+	}
+	
+		
+	public static void main(String[] args) 
+	{
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter String");
+		String inp=sc.next();
+		sc.close();
+		Practice pr=new Practice();
+		
+		System.out.println("Output: "+pr.alphanumeric(inp));
+	}
+
+}
+//used a loop, to extract number and characters into 2 strings, then append both strings into a final string
+
+
+
+STRING BUFFER
+-------------
+Q) WAP to accept string and display its mirror image
+	input		output
+	-----		------
+	Hello		Hello|olleH
+	Mask		Mask|ksaM
+
+import java.util.Scanner;
+public class StringDemo 
+{
+	StringBuffer mirror(String input)		
+	{
+		StringBuffer sb=new StringBuffer("");		//using string buffer
+		int len=input.length()-1;
+		sb.append(input);
+		sb.append("|");
+		for(int i=len;i>-1;i--)
+		{
+			char ch=input.charAt(i);
+			sb.append(ch);
+		}		
+		return sb;
+	}
+	
+	public static void main(String[] args) 
+	{
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter String");
+		String in=sc.next();
+		sc.close();
+		System.out.println(new StringDemo().mirror(in));
+	}
+
+}
+
+STRING TOKENIZER
+----------------
+import java.util.StringTokenizer;
+public class StringDemo 
+{
+	
+	public static void main(String[] args) 
+	{
+		String fruits="Apple,Orange,Banana";
+		StringTokenizer stz=new StringTokenizer(fruits,",");
+		while(stz.hasMoreTokens())				//checks if there are any tokens present in the string list
+		{
+			System.out.println(stz.nextToken());		//goes to the next item in the list, and the prev item is removed automatically(otherwise the while loop will be an infinite loop)
+		}
+		//Or simpler method
+		String []frs=fruits.split(",");
+		for (String f:frs)
+		{
+			System.out.println(f);
+		}
+	}
+
+}
+
+
+COLLECTIONS
+-----------
+-collection framework is available in the java.util package
+-collection is basically a group of objects
+-automatically grow and shrink
+
+ARRAYLIST:
+-list interface
+-grow and shrink based on elements, hence variable array
+-hold only object data types(not prmitive data types)
+-supports duplicate entries
+
+eg)
+import java.util.*;
+public class ListsDemo 
+{
+	public static void main(String[] args) 
+	{
+		List ar=new ArrayList(); 		//List->interface, ArrayList()->class
+		ar.add("Apple");
+		ar.add("Orange");
+		ar.add("Grape");
+		ar.add(100);
+		ar.add(100.99);
+		ar.add(null);
+		ar.add("Grape");
+		System.out.println(ar);
+		ar.remove(6);
+		System.out.println(ar);
+	}
+
+}
+
+eg) wrt case study
+import java.util.*;
+
+class Student
+{
+	private String id;
+	private String name;
+	public Student(String id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", name=" + name + "]";
+	}
+}
+
+
+public class ListsDemo 
+{
+	public static void main(String[] args) 
+	{
+		List ar=new ArrayList(); //List:interface, ArrayList():class
+		Student s1=new Student("S001","Anna");
+		Student s2=new Student("S002","Ram");
+		ar.add(s1);
+		ar.add(s2);
+		System.out.println(ar);
+	}
+
+}
+
+
+eg) different arraylist operations
+import java.util.*;
+
+public class ListsDemo 
+{
+	public static void main(String[] args) 
+	{
+		List ar=new ArrayList();		//List:interface, ArrayList():class
+		ar.add("One");
+		ar.add("Two");
+		ar.add(0,"Three");			//add string at 0 position
+		ar.set(0,"Binary");			//replaces the value presnt at 0
+		
+		List ar2=new ArrayList();
+		ar2.add("Four");
+		ar2.add("Five");
+		
+		ar.addAll(ar2);				//add all objects of ar2 to ar1
+		
+		ar.remove(3);
+		
+		ar2.clear();
+		
+		System.out.println(ar);
+		System.out.println(ar2);
+		System.out.println(ar.contains("Two"));	//checks for presence of "Two"
+		System.out.println(ar.get(1));		//get object at position 1
+		System.out.println(ar.indexOf("Four"));	//get index of "Four"
+	
+	}
+
+}
+
+Q) accept names list as a string, split em, convert to title case, store in an array list and return
+	input: "a,b,c,sam,sid"
+	output: as list-[A,B,C,Sam,Sid]
+		as String-A,B,C,Sam,Sid
+
+import java.util.*;
+/*import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+import java.util.Scanner;*/
+public class Practice 
+{
+	List getNames(String input)
+	{
+		List ar=new ArrayList();
+		StringTokenizer stz=new StringTokenizer(input,",");
+		while(stz.hasMoreTokens())
+		{
+			String str=stz.nextToken();
+			char ch= Character.toUpperCase(str.charAt(0));
+			String str1=str.substring(1);
+			str=ch+str1;
+			ar.add(str);
+		}
+		return ar;
+	}
+	
+	String getNames2(String input)
+	{
+		String []strarr=input.split(",");
+		int len=strarr.length;
+		String str = null;
+		String str1= "";
+		String sub;
+		for (int i=0;i<len;i++)
+		{
+			char ch=Character.toUpperCase(strarr[i].charAt(0));	
+			sub=strarr[i].substring(1);
+			if(i==len-1)
+				str=ch+sub;
+			else
+				str=ch+sub+",";
+			str1=str1+str;
+		}
+		return str1;
+	}
+		
+	public static void main(String[] args) 
+	{
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter Names seperated with commas");
+		String inp=sc.next();
+		sc.close();
+		
+		System.out.println("As List- "+new Practice().getNames(inp));
+		System.out.println("As String- "+new Practice().getNames2(inp));
+	}
+
+}
+
+
+SETS:
+-no duplicate values
+-tree set:ascending order, hash set:raw order
+
+Q) accept string, remove the duplicate letter, arrange them in ascending order and return as a string
+	input		output
+	------		-------
+	apple		aelp
+	uganda		adgnu
+	romeo		emor
+import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
+public class Practice 
+{
+	String removeDup(String input)
+	{
+		Set s=new TreeSet();
+		int len=input.length();
+		String res="";
+		for (char c:input.toCharArray())
+		{
+			s.add(c);
+		}
+		for(Object o:s)
+		{
+			res=res+o.toString();
+		}
+		return res;
+	}
+	
+		
+	public static void main(String[] args) 
+	{
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter String");
+		String inp=sc.next();
+		sc.close();
+		
+		System.out.println(new Practice().removeDup(inp));
+	}
+
+}
+
+
+GENERICS:
+-specifies the data type if the collection
+
+eg) Integer type arraylist
+import java.util.*;
+
+public class ListsDemo 
+{
+	public static void main(String[] args) 
+	{
+		List<Integer> ar=new ArrayList<Integer>();	//List:interface, ArrayList():class
+		ar.add(10);
+		ar.add(20);
+		
+		int sum=0;
+		
+		for(int num:ar)					//if ArrayList was "Raw" then this line would throw an error as num would be of "Object" type and not int
+		{
+			sum=sum+num;
+		}
+		System.out.println("Sum: "+sum);
+	}
+
+}
+

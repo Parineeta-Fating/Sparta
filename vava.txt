@@ -1,0 +1,45 @@
+Create Student class (id, name, dateofbirth, collegeName)
+  - Create Default and Parameterized  Constructors , getters and setters- 
+ 
+Create Course class on their own (id, name, duration, fees)
+    Create Default and Parameterized  Constructors , getters and setters- 
+Create Enroll class with the following structure:
+   - public class Enroll {
+    private Student student;
+    private Course course;
+    private LocalDate enrollmentDate;
+ 
+    //constructors & getters/setters
+     }
+ 
+- Next create AppEngine class which will contain the following methods:
+ 
+  - public void introduce(Course course)
+   {
+        // New Course Creation
+    }
+ 
+  - public void register(Student student) {
+        // Adding New Students
+ 
+    }
+ 
+  - public Student[] listOfStudents()
+   {
+        //Display All Students
+    }
+ 
+  - public Course[] listOfCourses() {
+        //Displaying All Courses
+    }
+ 
+  - public void enroll(Student student, Course course) {
+        // Mapping students to Course
+ 
+    }
+ 
+  - public Enroll[] listOfEnrollments() {
+        // Display coursewise student details.
+    }
+ 
+- Write App class with main method to test the above functionalities
